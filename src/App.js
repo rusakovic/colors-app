@@ -3,8 +3,16 @@ import {Route, Switch} from 'react-router-dom';
 import Palette from './Palette';
 import seedColors from './seedColors';
 import { generatePalette } from './colorHelpers';
+import { palette } from '@material-ui/system';
 
 class App extends Component {
+
+  findPalette(id) {
+    return seedColors.find((palette) => {
+      return palette.id === id
+    })
+  }
+
   render() {
     return (
       <Switch>
@@ -12,7 +20,14 @@ class App extends Component {
         <Route 
           exact 
           path='/palette/:id' 
-          render={() => <h1>individual palette</h1>} 
+          //take the value id from the link and insert into Pallete component as props 
+          render={(routeProps) => (
+            <Palette 
+              palette={generatePalette(
+                this.findPalette(routeProps.match.params.id)
+              )} 
+            />
+          )} 
         />
       </Switch>
       // <div>
