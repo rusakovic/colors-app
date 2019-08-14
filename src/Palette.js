@@ -24,14 +24,16 @@ import './Palette.css'
         )
         return (
           <div className='Palette'>
-            {/* slider for changing the range of colors */}
-            <Slider 
-              defaultValue={level} 
-              min={100} 
-              max={900} 
-              step={100} 
-              onAfterChange={this.changeLevel}
-            />
+            <div className="slider">
+               {/* slider for changing the range of colors */}
+              <Slider 
+                defaultValue={level} 
+                min={100} 
+                max={900} 
+                step={100} 
+                onAfterChange={this.changeLevel}
+              />
+            </div>
             {/* Navbar goes here */}
             <div className="Palette-colors">
             {/* bunch of color boxes       */}
