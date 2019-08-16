@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ColorBox from './ColorBox';
 import Navbar from './Navbar';
+import PaletteFooter from './PaletteFooter';
 
 import './Palette.css'
 
@@ -20,7 +21,6 @@ import './Palette.css'
       }
 
       changeFormat(val) {
-        console.log(val)
         this.setState({ format: val })
       }
 
@@ -43,16 +43,13 @@ import './Palette.css'
               level={level} 
               changeLevel={this.changeLevel} 
               handleChange={this.changeFormat} 
+              showingAllColors={true}
             />
             {/* bunch of color boxes       */}
             <div className="Palette-colors">
             {colorBoxes}
             </div>
-            {/* footer */}
-            <footer className='Palette-footer'>
-              {paletteName}
-              <span className='emoji'>{emoji}</span>
-            </footer>
+            <PaletteFooter paletteName={paletteName} emoji={emoji} />
           </div>
         )
       }
