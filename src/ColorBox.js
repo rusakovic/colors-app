@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {Link} from 'react-router-dom';
+import chroma from 'chroma-js';
 
 import './ColorBox.css';
 
@@ -21,6 +22,11 @@ import './ColorBox.css';
     render() {
       const { name, background, paletteId, id, moreUrl, showLink } = this.props;
       const { copied } = this.state;
+
+      // we should use different font color for light and dark palettes
+      const isDarkColor = chroma(background).luminance() <= 0.4;
+      const isLightColor = chroma(background).luminance() >= 0.5;
+
       return (
         <CopyToClipboard
           text={background}
@@ -35,18 +41,22 @@ import './ColorBox.css';
             {/* div for displaying text Copied and # of color above scaled DIV */}
             <div className={`copy-msg ${copied && "show"}`}>
               <h4>copied!</h4>
-              <p>{background}</p>
+              <p className={isLightColor && 'dark-text'}>
+                {background}
+              </p>
             </div>
             <div className="copy-container">
               <div className="box-content">
-                <span>{name}</span>
+                <span className={isDarkColor && "light-text"}>{name}</span>
               </div>
-              <button className="copy-button">Copy</button>
+              <button className={`copy-button ${isLightColor && 'dark-text'}`}>
+                Copy
+              </button>
             </div>
             {/* show the link only into the main palette component, but in shades color component we should hide it */}
             {showLink && (
               <Link to={moreUrl} onClick={e => e.stopPropagation()}>
-                <span className='see-more'>More</span>
+                <span className={`see-more ${isLightColor && 'dark-text'}`}>MORE</span>
               </Link>
 
             )}
