@@ -2,8 +2,61 @@ import React, { Component } from 'react';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {Link} from 'react-router-dom';
 import chroma from 'chroma-js';
+import { withStyles } from '@material-ui/styles';
+
 
 import './ColorBox.css';
+
+const styles = {
+  ColorBox: {
+    width: '20%',
+    height: props => (props.showingFullPalette ? '25%' : '50%'),
+    margin: '0 auto',
+    display: 'inline-block',
+    position: 'relative',
+    cursor: 'pointer',
+    marginBottom: '-4px',
+    '&:hover button': {
+      opacity: '1'
+    }
+  },
+  copyText: {
+    color: props => chroma(props.background).luminance() >= 0.5 ? 'rgba(0, 0, 0, 0.5)' : 'white'
+  },
+  seeMore: {
+    color: props => chroma(props.background).luminance() >= 0.5 ? 'rgba(0, 0, 0, 0.5)' : 'white',
+    background: 'rgba(255, 255, 255, 0.3)',
+    position: 'absolute',
+    border: 'none',
+    right: '0px',
+    bottom: '0px',
+    width: '60px',
+    height: '30px',
+    textAlign: 'center',
+    lineHeight: '30px',
+    textTransform: 'uppercase',
+  },
+  copyButton: {
+    color: props => chroma(props.background).luminance() >= 0.5 ? 'rgba(0, 0, 0, 0.5)' : 'white',
+    width: '100px',
+    height: '30px',
+    position: 'absolute',
+    display: 'inline-block',
+    top: '50%',
+    left: '50%',
+    marginLeft: '-50px',
+    marginTop: '-15px',
+    textAlign: 'center',
+    outline: 'none',
+    background: 'rgba(255, 255, 255, 0.3)',
+    fontSize: '1rem',
+    lineHeight: '30px',
+    textTransform: 'uppercase',
+    border: 'none',
+    textDecoration: 'none',
+    opacity: "0",
+  }
+}
 
  class ColorBox extends Component {
    constructor(props) {
@@ -20,19 +73,15 @@ import './ColorBox.css';
    }
 
     render() {
-      const { name, background, paletteId, id, moreUrl, showLink } = this.props;
+      const { name, background, moreUrl, showingFullPalette, classes } = this.props;
       const { copied } = this.state;
-
-      // we should use different font color for light and dark palettes
-      const isDarkColor = chroma(background).luminance() <= 0.4;
-      const isLightColor = chroma(background).luminance() >= 0.5;
 
       return (
         <CopyToClipboard
           text={background}
           onCopy={this.changeCopyState}
         >
-          <div style={{ background: background }} className='ColorBox'>
+          <div style={{ background: background }} className={classes.ColorBox}>
             {/* we should use the other div to avoid scaling of everything: text, buttons */}
             <div 
               style={{ background: background }} 
@@ -41,22 +90,22 @@ import './ColorBox.css';
             {/* div for displaying text Copied and # of color above scaled DIV */}
             <div className={`copy-msg ${copied && "show"}`}>
               <h4>copied!</h4>
-              <p className={isLightColor && 'dark-text'}>
+              <p className={classes.copyText}>
                 {background}
               </p>
             </div>
             <div className="copy-container">
               <div className="box-content">
-                <span className={isDarkColor && "light-text"}>{name}</span>
+                <span className={classes.copyText}>{name}</span>
               </div>
-              <button className={`copy-button ${isLightColor && 'dark-text'}`}>
+              <button className={classes.copyButton}>
                 Copy
               </button>
             </div>
             {/* show the link only into the main palette component, but in shades color component we should hide it */}
-            {showLink && (
+            {showingFullPalette && (
               <Link to={moreUrl} onClick={e => e.stopPropagation()}>
-                <span className={`see-more ${isLightColor && 'dark-text'}`}>MORE</span>
+                <span className={classes.seeMore}>MORE</span>
               </Link>
 
             )}
@@ -66,4 +115,4 @@ import './ColorBox.css';
         );
     }
 }		  
-export default ColorBox;
+export default withStyles(styles)(ColorBox);

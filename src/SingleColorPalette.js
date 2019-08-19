@@ -45,7 +45,7 @@ import {Link} from 'react-router-dom'
         key={color.name} 
         name={color.name} 
         background={color[format]} 
-        showLink={false} 
+        showFullPalette={false} 
       />
     ))
     return (
@@ -54,7 +54,6 @@ import {Link} from 'react-router-dom'
           handleChange={this.changeFormat} 
           showingAllColors={false}
         />
-        <h1>Single Color palette</h1>
         <div className='Palette-colors'>
           {colorBoxes}
           <div className='go-back ColorBox'>
