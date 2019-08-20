@@ -80,7 +80,8 @@ function NewPaletteForm(props) {
   const [open, setOpen] = React.useState(false);
   const [currentColor, setColor] = React.useState('teal');
   const [colors, setNewColor] = React.useState([{color: 'blue', name: 'blue'}]);
-  const [newName, setNewName] = React.useState('');
+  const [newColorName, setNewColorName] = React.useState('');
+  const [newPaletteName, setNewPaletteName] = React.useState('');
 
   React.useEffect(() => {
     // validation for color Name
@@ -95,6 +96,13 @@ function NewPaletteForm(props) {
           ({ color }) => color !== currentColor
         )
       }); 
+
+    //Validator for Palette Name
+    ValidatorForm.addValidationRule('isPaletteNameUnique', value => {
+      return props.palettes.every(
+        ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
+      )
+    });
 
   })
 
@@ -113,23 +121,29 @@ function NewPaletteForm(props) {
   function addNewColor() {
     const newColor = {
       color: currentColor,
-      name: newName,
+      name: newColorName,
     }
     setNewColor(oldColors => [...oldColors, newColor]);
-    setNewName('');
+    setNewColorName('');
   }
 
-  function handleChange(evt) {
-    setNewName(evt.target.value)
+  // set new Color Name to state
+  function handleChangeColorName(evt) {
+    setNewColorName(evt.target.value);
+  }
+
+  // set new Palette Name to state
+  function handleChangePaletteName(evt) {
+    setNewPaletteName(evt.target.value)
   }
 
   // save colors to new palette and redirect to the main page
   function handleSubmit() {
-    let newName = 'New Test Palette';
+    let newColorName = newPaletteName;
     // id = the name, but with dashes instead of spaces
     const newPalette = {
-      paletteName: newName, 
-      id: newName.toLowerCase().replace(/ /g, '-'),
+      paletteName: newColorName, 
+      id: newColorName.toLowerCase().replace(/ /g, '-'),
       colors: colors
     }
     props.savePalette(newPalette);
@@ -160,13 +174,31 @@ function NewPaletteForm(props) {
           <Typography variant="h6" noWrap>
             Persistent drawer
           </Typography>
-          <Button 
-            variant='contained' 
-            color='primary'
-            onClick={handleSubmit}
-          >
-            Save Palette
-          </Button>
+
+          {/* New Palette Validator input */}
+          <ValidatorForm onSubmit={handleSubmit}>
+            <TextValidator 
+              label='Palette Name' 
+              value={newPaletteName}
+              name='newPaletteName'
+              onChange={handleChangePaletteName}
+              validators={[
+                'required', 
+                'isPaletteNameUnique'
+              ]}
+              errorMessages={[
+                'Enter Palette Name', 
+                'Palette name already used'
+              ]}
+            />
+            <Button 
+              variant='contained' 
+              color='primary'
+              type='submit'
+            >
+              Save Palette
+            </Button>
+          </ValidatorForm>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -193,10 +225,13 @@ function NewPaletteForm(props) {
           color={currentColor} 
           onChangeComplete={updateCurrentColor}
         />
+
+        {/* New Color Validator input */}
         <ValidatorForm onSubmit={addNewColor} >
           <TextValidator 
-            value={newName} 
-            onChange={handleChange}
+            value={newColorName} 
+            name='newColorName'
+            onChange={handleChangeColorName}
             validators={[
               'required', 
               'isColorNameUnique', 
@@ -217,6 +252,7 @@ function NewPaletteForm(props) {
           Add Color
         </Button>
         </ValidatorForm>
+
       </Drawer>
       <main
         className={clsx(classes.content, {
