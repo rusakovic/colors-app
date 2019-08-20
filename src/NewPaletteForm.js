@@ -75,6 +75,8 @@ const useStyles = makeStyles(theme => ({
 function NewPaletteForm() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [currentColor, setColor] = React.useState('teal');
+  const [colors, setNewColor] = React.useState(['purple', '#e15764'])
 
   function handleDrawerOpen() {
     setOpen(true);
@@ -82,6 +84,14 @@ function NewPaletteForm() {
 
   function handleDrawerClose() {
     setOpen(false);
+  }
+
+  function updateCurrentColor(newColor) {
+    setColor(newColor.hex);
+  }
+
+  function addNewColor() {
+    setNewColor(oldColors => [...oldColors, currentColor])
   }
 
   return (
@@ -129,10 +139,17 @@ function NewPaletteForm() {
           <Button variant='contained' color='secondary'>Clear Palette</Button>
         </div>
         <ChromePicker 
-          color='purple' 
-          onChangeComplete={(newColor) => console.log(newColor)}
+          color={currentColor} 
+          onChangeComplete={updateCurrentColor}
         />
-        <Button variant='contained' color='primary'>Add Color</Button>
+        <Button 
+          variant='contained' 
+          color='primary' 
+          style={{backgroundColor: currentColor}}
+          onClick={addNewColor}
+        >
+          Add Color
+        </Button>
       </Drawer>
       <main
         className={clsx(classes.content, {
@@ -140,6 +157,11 @@ function NewPaletteForm() {
         })}
       >
         <div className={classes.drawerHeader} />
+        <ul>
+          {colors.map(color => (
+            <li style={{backgroundColor: color}}>{color}</li>
+          ))}
+        </ul>
       </main>
     </div>
   );
