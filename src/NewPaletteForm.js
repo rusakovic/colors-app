@@ -79,7 +79,7 @@ function NewPaletteForm(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [currentColor, setColor] = React.useState('teal');
-  const [colors, setNewColor] = React.useState([{color: 'blue', name: 'blue'}]);
+  const [colors, setNewColor] = React.useState([{color: '#fcba03', name: 'blue'}]);
   const [newColorName, setNewColorName] = React.useState('');
   const [newPaletteName, setNewPaletteName] = React.useState('');
 
