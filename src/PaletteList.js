@@ -20,9 +20,10 @@ import {withStyles} from '@material-ui/styles';
             <Link to='/palette/new'>Create Palette</Link>
           </nav>
           <div className={classes.palettes}>
-            {palettes.map(palette => (
+            {palettes.map((palette, idx) => (
               <MiniPalette 
                 {...palette} 
+                key={idx}
                 handleClick={() => this.goToPalette(palette.id)} 
               />
             ))}

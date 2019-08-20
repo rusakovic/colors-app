@@ -91,7 +91,6 @@ export default {
     flexDirection: 'column',
     '& h4': {
       fontWeight: '400',
-      textShadow: '1px 1px black',
       textShadow: '2px 2px 7px rgba(150, 150, 150, 0.5)',
       background: 'rgba(255, 255, 255, 0.1)',
       width: '100%',
