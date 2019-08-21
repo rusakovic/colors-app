@@ -103,13 +103,11 @@ function NewPaletteForm(props) {
 
 
   // save colors to new palette and redirect to the main page
-  function handleSubmit(newPaletteName) {
+  function handleSubmit(newPalette) {
     // id = the name, but with dashes instead of spaces
-    const newPalette = {
-      paletteName: newPaletteName,
-      id: newPaletteName.toLowerCase().replace(/ /g, '-'),
-      colors: colors
-    }
+    newPalette.id = newPalette.paletteName.toLowerCase().replace(/ /g, '-');
+    newPalette.colors = colors;
+
     props.savePalette(newPalette);
     //redirect to the main page
     props.history.push('/')
