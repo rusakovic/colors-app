@@ -2,13 +2,10 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import PaletteFormNav from './PaletteFormNav';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
 import DraggableColorList from './DrarggableColorList';
@@ -83,7 +80,7 @@ NewPaletteForm.defaultProps = {
 function NewPaletteForm(props) {
   
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [currentColor, setColor] = React.useState('teal');
   const [colors, setNewColor] = React.useState(props.palettes[0].colors);
   const [newColorName, setNewColorName] = React.useState('');
@@ -138,18 +135,14 @@ function NewPaletteForm(props) {
     setNewColorName(evt.target.value);
   }
 
-  // set new Palette Name to state
-  function handleChangePaletteName(evt) {
-    setNewPaletteName(evt.target.value)
-  }
+
 
   // save colors to new palette and redirect to the main page
-  function handleSubmit() {
-    let newColorName = newPaletteName;
+  function handleSubmit(newPaletteName) {
     // id = the name, but with dashes instead of spaces
     const newPalette = {
-      paletteName: newColorName, 
-      id: newColorName.toLowerCase().replace(/ /g, '-'),
+      paletteName: newPaletteName, 
+      id: newPaletteName.toLowerCase().replace(/ /g, '-'),
       colors: colors
     }
     props.savePalette(newPalette);
@@ -186,60 +179,21 @@ function NewPaletteForm(props) {
   }
 
   // REFACTORING PROPS
-  const { maxColors } = props;
+  const { maxColors, palettes } = props;
   // Check if the palette colors more than maxColors
   const paletteIsFull = colors.length >= maxColors;
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        color='default'
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Persistent drawer
-          </Typography>
-
-          {/* New Palette Validator input */}
-          <ValidatorForm onSubmit={handleSubmit}>
-            <TextValidator 
-              label='Palette Name' 
-              value={newPaletteName}
-              name='newPaletteName'
-              onChange={handleChangePaletteName}
-              validators={[
-                'required', 
-                'isPaletteNameUnique'
-              ]}
-              errorMessages={[
-                'Enter Palette Name', 
-                'Palette name already used'
-              ]}
-            />
-            <Button 
-              variant='contained' 
-              color='primary'
-              type='submit'
-            >
-              Save Palette
-            </Button>
-          </ValidatorForm>
-        </Toolbar>
-      </AppBar>
+      {/* NewPallette navbar as separate component */}
+      <PaletteFormNav 
+        open={open} 
+        classes={classes} 
+        palettes={palettes} 
+        handleSubmit={handleSubmit} 
+        handleDrawerOpen={handleDrawerOpen}
+      />
+      {/* inner components */}
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -262,7 +216,7 @@ function NewPaletteForm(props) {
            color='primary'
            onClick={addRandomColor}
            disabled={paletteIsFull}
-            
+
           >
             Random Color
           </Button>
