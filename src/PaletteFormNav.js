@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-
+import PaletteMetaForm from './PaletteMetaForm';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -45,24 +45,7 @@ const useStyles = makeStyles(theme => ({
 
 function PaletteFormNav(props) {
   const classes = useStyles();
-  const [newPaletteName, setNewPaletteName] = React.useState('');
   const { open, handleSubmit, handleDrawerOpen, palettes } = props;
-
-  React.useEffect(() => {
-
-    //Validator for Palette Name
-    ValidatorForm.addValidationRule('isPaletteNameUnique', value => {
-      return palettes.every(
-        ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
-      )
-    });
-
-  })
-
-  // set new Palette Name to state
-  function handleChangePaletteName(evt) {
-    setNewPaletteName(evt.target.value)
-  }
 
 
   return (
@@ -90,30 +73,9 @@ function PaletteFormNav(props) {
             </Typography>
         </Toolbar>
         <div className={classes.navBtns}>
-          {/* New Palette Validator input */}
-          <ValidatorForm onSubmit={() => handleSubmit(newPaletteName)}>
-            <TextValidator
-              label='Palette Name'
-              value={newPaletteName}
-              name='newPaletteName'
-              onChange={handleChangePaletteName}
-              validators={[
-                'required',
-                'isPaletteNameUnique'
-              ]}
-              errorMessages={[
-                'Enter Palette Name',
-                'Palette name already used'
-              ]}
-            />
-            <Button
-              variant='contained'
-              color='primary'
-              type='submit'
-            >
-              Save Palette
-              </Button>
-          </ValidatorForm>
+          
+ 
+          <PaletteMetaForm palettes={palettes} handleSubmit={handleSubmit} />
           <Link to='/'>
             <Button
               variant='contained'
