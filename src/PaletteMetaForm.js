@@ -8,12 +8,12 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PaletteFormNav from './PaletteFormNav';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-
+import { Picker } from 'emoji-mart';
+import 'emoji-mart/css/emoji-mart.css';
 
 function PaletteMetaForm(props) {
-  const [open, setOpen] = React.useState(false);
   const [newPaletteName, setNewPaletteName] = React.useState('');
-  const { handleSubmit, palettes } = props;
+  const { handleSubmit, palettes, hideForm } = props;
 
   React.useEffect(() => {
 
@@ -31,45 +31,38 @@ function PaletteMetaForm(props) {
     setNewPaletteName(evt.target.value)
   }
 
-  function handleClickOpen() {
-    setOpen(true);
-  }
-
-  function handleClose() {
-    setOpen(false);
-  }
 
   return (
 
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={true} onClose={hideForm} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create a Palette Name</DialogTitle>
         <ValidatorForm onSubmit={() => handleSubmit(newPaletteName)}>
         <DialogContent>
           <DialogContentText>
             Please, enter a name for your new beautiful palette. Make sure it's unique.
           </DialogContentText>
+          <Picker />
           {/* New Palette Validator input */}
-
-            <TextValidator
-              label='Palette Name'
-              value={newPaletteName}
-              name='newPaletteName'
-              fullWidth
-              margin='normal'
-              onChange={handleChangePaletteName}
-              validators={[
-                'required',
-                'isPaletteNameUnique'
-              ]}
-              errorMessages={[
-                'Enter Palette Name',
-                'Palette name already used'
-              ]}
-            />
-
+          <TextValidator
+            label='Palette Name'
+            value={newPaletteName}
+            name='newPaletteName'
+            fullWidth
+            margin='normal'
+            onChange={handleChangePaletteName}
+            validators={[
+              'required',
+              'isPaletteNameUnique'
+            ]}
+            errorMessages={[
+              'Enter Palette Name',
+              'Palette name already used'
+            ]}
+          />
         </DialogContent>
+
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={hideForm} color="primary">
             Cancel
           </Button>
 

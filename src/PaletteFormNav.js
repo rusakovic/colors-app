@@ -56,9 +56,15 @@ function PaletteFormNav(props) {
   const { open, handleSubmit, handleDrawerOpen, palettes } = props;
   const [formShowing, setFormShowing] = React.useState(false);
 
+  // hide and show Save Palette pop-up
   function showForm() {
     setFormShowing(true)
   }
+  function hideForm() {
+    setFormShowing(false)
+  }
+  // end
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -100,7 +106,7 @@ function PaletteFormNav(props) {
           </Button>
         </div>
       </AppBar>
-      {formShowing && <PaletteMetaForm palettes={palettes} handleSubmit={handleSubmit} /> }
+      {formShowing && <PaletteMetaForm palettes={palettes}  handleSubmit={handleSubmit} hideForm={hideForm}  /> }
       
     </div>
   )
