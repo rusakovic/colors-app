@@ -1,10 +1,29 @@
-import React from 'react'
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { ChromePicker } from 'react-color';
 
+const useStyles = makeStyles(theme => ({
+  picker: {
+    width: '100% !important',
+    marginTop: '2rem',
+  },
+  addColor: {
+    width: '100%',
+    padding: '1rem',
+    marginTop: '1rem',
+    fontSize: '1rem'
+  },
+  colorNameInput: {
+    width: '100%',
+
+  }
+}))
+
  function ColorPickerForm(props) {
+    const classes = useStyles();
     const { paletteIsFull, addNewColor, colors } = props;
 
     const [currentColor, setColor] = React.useState('teal');
@@ -51,13 +70,18 @@ import { ChromePicker } from 'react-color';
       <ChromePicker 
           color={currentColor} 
           onChangeComplete={updateCurrentColor}
+          className={classes.picker}
         />
 
         {/* New Color Validator input */}
         <ValidatorForm onSubmit={handleSubmit} >
           <TextValidator 
             value={newColorName} 
+            className={classes.colorNameInput}
+            placeholder="Color Name"
             name='newColorName'
+            variant='filled'
+            margin='normal'
             onChange={handleChangeColorName}
             validators={[
               'required', 
@@ -74,6 +98,7 @@ import { ChromePicker } from 'react-color';
           variant='contained' 
           color='primary' 
           type='submit'
+          className={classes.addColor}
           style={{
             backgroundColor: paletteIsFull 
               ? 'grey' 

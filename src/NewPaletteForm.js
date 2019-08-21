@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
   },
-  
+
   hide: {
     display: 'none',
   },
@@ -29,6 +29,8 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    display: 'flex',
+    alignItems: 'center'
   },
   drawerHeader: {
     display: 'flex',
@@ -54,6 +56,21 @@ const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0,
   },
+  container: {
+    width: '90%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttons: {
+    width: '100%',
+  },
+  button: {
+    width: '50%'
+  }
+
 }));
 
 NewPaletteForm.defaultProps = {
@@ -61,7 +78,7 @@ NewPaletteForm.defaultProps = {
 }
 
 function NewPaletteForm(props) {
-  
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [colors, setNewColor] = React.useState(props.palettes[0].colors);
@@ -85,14 +102,11 @@ function NewPaletteForm(props) {
   }
 
 
-
-
-
   // save colors to new palette and redirect to the main page
   function handleSubmit(newPaletteName) {
     // id = the name, but with dashes instead of spaces
     const newPalette = {
-      paletteName: newPaletteName, 
+      paletteName: newPaletteName,
       id: newPaletteName.toLowerCase().replace(/ /g, '-'),
       colors: colors
     }
@@ -109,7 +123,7 @@ function NewPaletteForm(props) {
   }
 
   // function for sorting ColorBoxes
-  let onSortEnd = ({oldIndex, newIndex}) => {
+  let onSortEnd = ({ oldIndex, newIndex }) => {
     setNewColor(
       arrayMove(colors, oldIndex, newIndex)
     )
@@ -137,10 +151,10 @@ function NewPaletteForm(props) {
   return (
     <div className={classes.root}>
       {/* NewPallette navbar as separate component */}
-      <PaletteFormNav 
-        open={open} 
-        palettes={palettes} 
-        handleSubmit={handleSubmit} 
+      <PaletteFormNav
+        open={open}
+        palettes={palettes}
+        handleSubmit={handleSubmit}
         handleDrawerOpen={handleDrawerOpen}
       />
       {/* inner components */}
@@ -159,27 +173,40 @@ function NewPaletteForm(props) {
           </IconButton>
         </div>
         <Divider />
-        <Typography variant='h4'>Design Your Palette</Typography>
-        <div>
-          <Button
-           variant='contained' 
-           color='primary'
-           onClick={addRandomColor}
-           disabled={paletteIsFull}
 
+        <div className={classes.container}>
+          <Typography 
+            variant='h4'
+            gutterBottom
           >
-            Random Color
-          </Button>
-          <Button 
-            variant='contained' 
-            color='secondary'
-            onClick={clearColors}
-          >
-            Clear Palette
-          </Button>
+            Design Your Palette
+          </Typography>
+          <div className={classes.buttons}>
+            <Button
+              variant='contained'
+              color='primary'
+              className={classes.button}
+              onClick={addRandomColor}
+              disabled={paletteIsFull}
+            >
+              Random Color
+            </Button>
+            <Button
+              variant='contained'
+              color='secondary'
+              className={classes.button}
+              onClick={clearColors}
+            >
+              Clear Palette
+            </Button>
+          </div>
+          {/* Separated color picker from */}
+          <ColorPickerForm 
+            paletteIsFull={paletteIsFull} 
+            addNewColor={addNewColor} 
+            colors={colors} 
+          />
         </div>
-        {/* Separated color picker from */}
-        <ColorPickerForm paletteIsFull={paletteIsFull} addNewColor={addNewColor} colors={colors}  />
 
       </Drawer>
       <main
@@ -188,12 +215,12 @@ function NewPaletteForm(props) {
         })}
       >
         <div className={classes.drawerHeader} />
-          <DraggableColorList 
-            colors={colors} 
-            removeColor={removeColor}
-            axis='xy'
-            onSortEnd={onSortEnd}
-          />
+        <DraggableColorList
+          colors={colors}
+          removeColor={removeColor}
+          axis='xy'
+          onSortEnd={onSortEnd}
+        />
       </main>
     </div>
   );
