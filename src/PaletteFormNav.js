@@ -12,7 +12,18 @@ import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
  function PaletteFormNav(props) {
   const [newPaletteName, setNewPaletteName] = React.useState('');
+  const { open, classes, handleSubmit, handleDrawerOpen, palettes } = props;
 
+    React.useEffect(() => {
+
+      //Validator for Palette Name
+      ValidatorForm.addValidationRule('isPaletteNameUnique', value => {
+        return palettes.every(
+          ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
+        )
+      });
+
+    })
 
     // set new Palette Name to state
     function handleChangePaletteName(evt) {
@@ -20,7 +31,6 @@ import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
     }
 
   
-    const { open, classes, handleSubmit, handleDrawerOpen } = props;
     return (
       <div>
         <CssBaseline />
