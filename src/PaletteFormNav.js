@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
     }),
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     height: '64px',
   },
   appBarShift: {
@@ -39,15 +40,25 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
   },
   navBtns: {
+    marginRight: '1rem',
+    '& a': {
+      textDecoration: 'none',
+    }
+  },
+  button: {
+    margin: '0 0.5rem',
+  },
 
-  }
 }))
 
 function PaletteFormNav(props) {
   const classes = useStyles();
   const { open, handleSubmit, handleDrawerOpen, palettes } = props;
+  const [formShowing, setFormShowing] = React.useState(false);
 
-
+  function showForm() {
+    setFormShowing(true)
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -75,17 +86,22 @@ function PaletteFormNav(props) {
         <div className={classes.navBtns}>
           
  
-          <PaletteMetaForm palettes={palettes} handleSubmit={handleSubmit} />
-          <Link to='/'>
+          <Link to='/' >
             <Button
               variant='contained'
               color='secondary'
+              className={classes.button}
             >
               Go Back
-                </Button>
+            </Button>
           </Link>
+          <Button variant="contained" color="primary" onClick={showForm} className={classes.button}>
+            Save
+          </Button>
         </div>
       </AppBar>
+      {formShowing && <PaletteMetaForm palettes={palettes} handleSubmit={handleSubmit} /> }
+      
     </div>
   )
 
