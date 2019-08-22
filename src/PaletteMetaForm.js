@@ -39,6 +39,8 @@ function PaletteMetaForm(props) {
       emoji: emoji.native
     }
     handleSubmit(newPalette);
+    setOpen('')
+
   }
 
   return (
