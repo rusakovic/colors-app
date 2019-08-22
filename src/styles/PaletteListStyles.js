@@ -2,6 +2,16 @@ import sizes from './sizes';
 import bg from './BG.svg';
 
 export default {
+  //we need to add global to use period styling for React Transition Group
+  '@global': {
+    '.fade-exit': {
+      opacity: 1
+    },
+    '.fade-exit-active': {
+      opacity: 0,
+      transition: 'opacity 500ms ease-out'
+    }
+  },
   root: {
     height: '100vh',
     display: 'flex',
