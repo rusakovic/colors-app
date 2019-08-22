@@ -7,7 +7,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import AddIcon from '@material-ui/icons/Add';
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import Button from '@material-ui/core/Button';
 import useStyles from './styles/PaletteFormNavStyles';
 
@@ -43,9 +44,11 @@ function PaletteFormNav(props) {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
+            className={clsx(classes.menuButton, {
+              [classes.hide]:open
+            })}
           >
-            <MenuIcon />
+            <AddCircleOutlineOutlinedIcon color='primary' />
           </IconButton>
           <Typography variant="h6" noWrap>
             Create A Palette
