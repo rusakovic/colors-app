@@ -5,10 +5,11 @@ export default {
   //we need to add global to use period styling for React Transition Group
   '@global': {
     '.fade-exit': {
-      opacity: 1
+      opacity: '1'
     },
     '.fade-exit-active': {
-      opacity: 0,
+      opacity: '0',
+      transition: 'opacity 500ms ease-out'
     }
   },
   root: {
@@ -16,6 +17,8 @@ export default {
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'center',
+    letterSpacing: 0,
+    lineHeight: '1',
     /* background by SVGBackgrounds.com */
     backgroundColor: '#186d8f',
     backgroundImage: `url(${bg})`,

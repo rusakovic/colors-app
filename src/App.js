@@ -48,7 +48,7 @@ class App extends Component {
 
   render() {
     return (
-      <Route render={({location}) => (
+      <Route render={({ location }) => (
         <TransitionGroup>
           <CSSTransition key={location.key} classNames='page' timeout={500}>
             <Switch location={location}>
@@ -70,11 +70,11 @@ class App extends Component {
                 exact path='/'
                 render={(routeProps) => (
                   <Page>
-                  <PaletteList
-                    palettes={this.state.palettes}
-                    deletePalette={this.deletePalette}
-                    {...routeProps}
-                  />
+                    <PaletteList
+                      palettes={this.state.palettes}
+                      deletePalette={this.deletePalette}
+                      {...routeProps}
+                    />
                   </Page>
                 )}
               />
@@ -96,12 +96,12 @@ class App extends Component {
                 path='/palette/:paletteId/:colorId'
                 render={(routeProps) => (
                   <Page>
-                  <SingleColorPalette
-                    colorId={routeProps.match.params.colorId}
-                    palette={generatePalette(
-                      this.findPalette(routeProps.match.params.paletteId)
-                    )}
-                  />
+                    <SingleColorPalette
+                      colorId={routeProps.match.params.colorId}
+                      palette={generatePalette(
+                        this.findPalette(routeProps.match.params.paletteId)
+                      )}
+                    />
                   </Page>
                 )}
               />

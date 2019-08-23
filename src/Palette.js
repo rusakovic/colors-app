@@ -52,7 +52,7 @@ import { withStyles } from '@material-ui/styles';
             />
             {/* bunch of color boxes       */}
             <div className={classes.colors}>
-            {colorBoxes}
+              {colorBoxes}
             </div>
             <PaletteFooter paletteName={paletteName} emoji={emoji} />
           </div>
