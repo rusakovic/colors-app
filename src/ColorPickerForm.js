@@ -58,7 +58,10 @@ import useStyles from './styles/ColorPickerFormStyles';
         />
 
         {/* New Color Validator input */}
-        <ValidatorForm onSubmit={handleSubmit} >
+        <ValidatorForm 
+          onSubmit={handleSubmit}  
+          instantValidate={false}
+        >
           <TextValidator 
             value={newColorName} 
             className={classes.colorNameInput}
