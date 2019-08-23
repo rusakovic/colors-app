@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import MiniPalette from './MiniPalette'
 import { Link } from 'react-router-dom';
-import styles from './styles/PaletteListStyles';
-import { withStyles } from '@material-ui/styles';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
+import { withStyles } from '@material-ui/styles';
 import { Dialog, DialogTitle } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
@@ -15,6 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
 
+import styles from './styles/PaletteListStyles';
 
 class PaletteList extends Component {
   constructor(props) {
@@ -46,8 +47,8 @@ class PaletteList extends Component {
     this.props.history.push(`/palette/${id}`)
   }
   render() {
-    const { palettes, classes, deletePalette } = this.props;
-    const { openDeleteDialog, deletingId } = this.state;
+    const { palettes, classes } = this.props;
+    const { openDeleteDialog } = this.state;
     return (
       <div className={classes.root} >
         <div className={classes.container}>
@@ -56,7 +57,7 @@ class PaletteList extends Component {
             <Link to='/palette/new'>Create Palette</Link>
           </nav>
             <TransitionGroup className={classes.palettes}>
-              {palettes.map((palette, idx) => (
+              {palettes.map(palette => (
                 <CSSTransition 
                   key={palette.id} 
                   classNames='fade' 

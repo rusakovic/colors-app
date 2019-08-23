@@ -20,13 +20,9 @@ NewPaletteForm.defaultProps = {
 }
 
 function NewPaletteForm(props) {
-
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [colors, setNewColor] = React.useState(props.palettes[0].colors);
-  const [newPaletteName, setNewPaletteName] = React.useState('');
-
-
 
   function handleDrawerOpen() {
     setOpen(true);
@@ -36,13 +32,10 @@ function NewPaletteForm(props) {
     setOpen(false);
   }
 
-
-
   function addNewColor(newColor) {
 
     setNewColor(oldColors => [...oldColors, newColor]);
   }
-
 
   // save colors to new palette and redirect to the main page
   function handleSubmit(newPalette) {

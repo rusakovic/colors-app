@@ -21,7 +21,6 @@ function PaletteMetaForm(props) {
         ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
       )
     });
-
   })
 
   // set new Palette Name to state
@@ -40,7 +39,6 @@ function PaletteMetaForm(props) {
     }
     handleSubmit(newPalette);
     setOpen('')
-
   }
 
   return (
@@ -80,10 +78,11 @@ function PaletteMetaForm(props) {
           </DialogContent>
 
           <DialogActions>
+            {/* CANCEL BUTTON */}
             <Button onClick={hideForm} color="primary">
                 Cancel
             </Button>
-
+              {/* SAVE BUTTON  */}
             <Button
               variant='contained'
               color='primary'
@@ -93,7 +92,6 @@ function PaletteMetaForm(props) {
             </Button>
           </DialogActions>
         </ValidatorForm>
-
       </Dialog>
     </div>
   );

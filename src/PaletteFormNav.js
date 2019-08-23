@@ -7,7 +7,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import Button from '@material-ui/core/Button';
 import useStyles from './styles/PaletteFormNavStyles';
@@ -55,8 +54,6 @@ function PaletteFormNav(props) {
             </Typography>
         </Toolbar>
         <div className={classes.navBtns}>
-          
- 
           <Link to='/' >
             <Button
               variant='contained'
@@ -66,15 +63,24 @@ function PaletteFormNav(props) {
               Go Back
             </Button>
           </Link>
-          <Button variant="contained" color="primary" onClick={showForm} className={classes.button}>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={showForm} 
+            className={classes.button}
+          >
             Save
           </Button>
         </div>
       </AppBar>
-      {formShowing && <PaletteMetaForm palettes={palettes}  handleSubmit={handleSubmit} hideForm={hideForm}  /> }
-      
+      {formShowing && 
+        <PaletteMetaForm 
+          palettes={palettes}  
+          handleSubmit={handleSubmit} 
+          hideForm={hideForm}  
+        /> 
+      }
     </div>
   )
-
 }
 export default PaletteFormNav;

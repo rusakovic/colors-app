@@ -6,9 +6,6 @@ import styles from './styles/PaletteStyles';
 import { withStyles } from '@material-ui/styles';
 
 
-
-
-
  class Palette extends Component {
       constructor(props) {
         super(props);

@@ -16,7 +16,7 @@ import 'rc-slider/assets/index.css';
      super(props);
      this.state = {
        format: 'hex',
-       open: true
+       open: false
      }
      this.handleFormatChange = this.handleFormatChange.bind(this);
      this.closeSnackbar = this.closeSnackbar.bind(this);
@@ -34,7 +34,7 @@ import 'rc-slider/assets/index.css';
 
   render() {
     const { level, changeLevel, showingAllColors, classes } = this.props;
-    const { format } = this.state;
+    const { open, format } = this.state;
     return (
       <header className={classes.Navbar}>
         <div className={classes.logo}>
@@ -68,7 +68,7 @@ import 'rc-slider/assets/index.css';
         {/* pop-up small window when the user change the color type */}
         <Snackbar 
           anchorOrigin={{vertical: 'bottom', horizontal: 'left' }}
-          open={this.state.open}
+          open={open}
           autoHideDuration={3000}
           message={<span id='message-id'>Format Changed to {format.toUpperCase()}</span>}
           ContentProps={{ 'aria-describedby': 'message-id' }}
