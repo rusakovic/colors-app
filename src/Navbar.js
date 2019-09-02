@@ -62,7 +62,7 @@ import 'rc-slider/assets/index.css';
           <Select value={format} onChange={this.handleFormatChange}>
             <MenuItem value='hex'>Hex - #ffffff</MenuItem>
             <MenuItem value='rgb'>Rgb - rgb(255,255,255)</MenuItem>
-            <MenuItem value='rgba'>Rgb - rgb(255,255,255, 1.0)</MenuItem>
+            <MenuItem value='rgba'>Rgba - rgba(255,255,255, 1.0)</MenuItem>
           </Select>
         </div>
         {/* pop-up small window when the user change the color type */}

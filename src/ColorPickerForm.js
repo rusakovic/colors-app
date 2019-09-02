@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { ChromePicker } from 'react-color';
 import useStyles from './styles/ColorPickerFormStyles';
+import chroma from 'chroma-js';
 
 
  function ColorPickerForm(props) {
@@ -26,8 +27,6 @@ import useStyles from './styles/ColorPickerFormStyles';
             ({ color }) => color !== currentColor
           )
         }); 
-  
-  
     })
 
 
@@ -89,7 +88,8 @@ import useStyles from './styles/ColorPickerFormStyles';
           style={{
             backgroundColor: paletteIsFull 
               ? 'grey' 
-              : currentColor
+              : currentColor,
+            color: chroma(currentColor).luminance() >= 0.5 ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.8)',
           }}
           disabled={paletteIsFull}
         >

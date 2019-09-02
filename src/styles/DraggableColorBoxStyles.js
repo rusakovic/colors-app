@@ -23,6 +23,8 @@ const styles = {
     [sizes.down('sm')]: {
       width: '100%',
       height: '5%',
+    marginBottom: '-5.5px',
+
     },
   },
   boxContent: {

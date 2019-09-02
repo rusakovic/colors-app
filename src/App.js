@@ -15,13 +15,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     const savedPalettes = JSON.parse(window.localStorage.getItem('palettes'));
-    this.state = {
-      palettes: savedPalettes || seedColors
-    }
+    this.state = { palettes: savedPalettes || seedColors };
     this.savePalette = this.savePalette.bind(this);
     this.findPalette = this.findPalette.bind(this);
     this.deletePalette = this.deletePalette.bind(this);
   }
+
 
   findPalette(id) {
     return this.state.palettes.find((palette) => {
@@ -49,6 +48,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.palettes)
     return (
       <Route render={({ location }) => (
         <TransitionGroup>
@@ -62,6 +62,7 @@ class App extends Component {
                     <NewPaletteForm
                       savePalette={this.savePalette}
                       palettes={this.state.palettes}
+                      seedColors={seedColors}
                       {...routeProps}
                     />
                   </Page>
@@ -107,7 +108,17 @@ class App extends Component {
                   </Page>
                 )}
               />
-
+              <Route
+                render={(routeProps) => (
+                  <Page>
+                    <PaletteList
+                      palettes={this.state.palettes}
+                      deletePalette={this.deletePalette}
+                      {...routeProps}
+                    />
+                  </Page>
+                )}
+              />
             </Switch>
           </CSSTransition>
         </TransitionGroup>
